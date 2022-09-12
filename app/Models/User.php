@@ -12,6 +12,11 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const COMMON = 10;
+    const REGISTERED = 20;
+    const ADMIN = 30;
+    const SUPER_ADMIN = 40;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -41,4 +46,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $attributes = [
+        'type_user' => 10,
+    ];
+
+    public function isSuperAdmin(){
+        if($this->type_user == self::SUPER_ADMIN){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function isAdmin(){
+        if($this->type_user == self::ADMIN){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
